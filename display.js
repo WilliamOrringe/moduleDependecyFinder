@@ -10,7 +10,7 @@ function doStuff(data){
   new_values = [];
   for(var i = 0; i < new_data.length; i++){
     var new_array = []
-    new_array = split(new_data[i],":")
+    new_array = split(new_data[i],")")
     new_values.push(new_array)
   }
   console.log(new_values)
@@ -20,48 +20,47 @@ let displayArray = [];
 let new_list ="";
 function findLink(new_values){
   displayArray = [];
-  for(var i = new_values.length-1; i > 0; i--){
-    new_list = new_values[i][0];
+  for(var i = new_values.length-2; i >= 0; i--){
+    new_list = str(new_values[i][0]);
     var newStr = recurse(i,new_values,new_list);
+    newStr = str(i) + ": " + str(newStr);
     displayArray.push(newStr);
   }
 }
 function recurse(index,new_values,addList){
+  console.log(new_values[index] + " : " + new_values[index][2])
   if(new_values[index][2] == "None"){
     var nameOf = str(addList) + "------> None";
-    console.log(addList);
+  //  console.log(addList);
     return nameOf;
   }else{
-    for(var i = 0; i < new_values.length;i++){
-      //console.log(new_values[index]);
-      if(i != index){
-      if(new_values[index][2] == new_values[i][1]){
-        console.log("DESCENDING" + ": i = " + str(i));
-        if(addList != str(new_values[index][0])){
-          addList = (addList + "------>" + str(new_values[index][0]));
+    for(var i = 0; i < new_values.length-1;i++){
+    //  if(i != index){ // add a for loop here for inifinite dependencies
+        if(new_values[index][2] == new_values[i][1]){
+          console.log("DESCENDING" + ": i = " + str(i));
+            addList = (addList + "------>" + str(new_values[i][0]));
+          return recurse(i,new_values,addList);
         }
-        return recurse(i,new_values,addList);
-      }else if (new_values[index][3] == new_values[i][1] && new_values[index][3] != null) {
-        console.log("COOL" + str(i));
-        if(addList != str(new_values[index][0])){
-          addList = (addList +"------>" + str(new_values[index][0]));
-        }
-        return recurse(i,new_values,addList);
-        }
+        if (new_values[index][3] == new_values[i][1]) {
+            addList = (addList + "------>" + str(new_values[i][0]));
+          return recurse(i,new_values,addList);
       }
     }
-    return addList;
   }
+  return addList + "------> " + str(new_values[index][2]);
 }
 var new_values = [];
-//var data = "";
 let sSlider, pSlider;
 let bool = true;
 function draw() {
+  var textSizes = 9;
   background(255);
-  for(var i = 0; i < new_values.length; i++){
-    textSize(9);
-    text(displayArray[i],30,i*14);
+  displayArray.sort(function(a,b){
+    return a.length - b.length;
+  })
+  for(var i = 0; i < displayArray.length; i++){
+    textSize(textSizes);
+    text(displayArray[i],30,textSizes + i*14);
   }
 }
 let data= "";
