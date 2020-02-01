@@ -108,10 +108,21 @@ def next_stage(ext, names):
     print(list(deps))
     print(str(len(deps[0]) + len(deps[1]) + len(deps[2]) + len(deps[3])))
     file_w = open("toDraw.txt", "w+")
-    for index in range(4):
-        for count in range(len(ext)):
-            file_w.write(names[index][count]+":"+ext[index][count] \
-            +":"+deps[index][count]+"-")
+    for indexs in range(4):
+        for count in range(len(ext[indexs])):
+            try:
+                file_w.write(str(names[indexs][count])+":"+str(ext[indexs][count]) + \
+                ":"+str(deps[indexs][count][0]))
+                if deps[indexs][count] != "None":
+                    try:
+                        file_w.write(":" + str(deps[indexs][count][1])+"@")
+                    except:
+                        file_w.write("@")
+                else:
+                    file_w.write("one@")
+            except:
+                print("COUNTER" + str(count * index))
+
 ####################################################
 
 if __name__ == "__main__":
