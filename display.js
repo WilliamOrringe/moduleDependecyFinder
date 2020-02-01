@@ -39,6 +39,9 @@ function recurse(index,new_values,addList){
         if(new_values[index][2] == new_values[i][1]){
           console.log("DESCENDING" + ": i = " + str(i));
             addList = (addList + "------>" + str(new_values[i][0]));
+            if (new_values[index][3] == new_values[i][1]) {
+                addList = (addList + "------>" + str(new_values[i][0]));
+              }
           return recurse(i,new_values,addList);
         }
         if (new_values[index][3] == new_values[i][1]) {
