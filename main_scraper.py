@@ -1,5 +1,4 @@
 import requests
-import time
 import re
 def main():
     url = 'https://intranet.exeter.ac.uk/emps/studentinfo/subjects/computerscience/programmes/2019new/?programmeId=2943'
@@ -31,7 +30,6 @@ def main():
                 counter = 1
                 new_val[stage].append(str(line))
 def cleanup():
-    new_array = []
     ext = []
     names = []
     for i in range(4):
@@ -95,11 +93,11 @@ def next_stage(ext, names):
             print(str(names[index][index_l]) + " : " + str(ext[index][index_l]))
     url = 'https://intranet.exeter.ac.uk/emps/studentinfo/subjects/computerscience/modules/2019/index.php/?moduleCode='
     for index in range(4):
-        for moduleCode in range(len(ext[index])):
-            r = requests.get(url+str(ext[index][moduleCode]))
-            #print(ext[index][moduleCode])
+        for module_code in range(len(ext[index])):
+            r = requests.get(url+str(ext[index][module_code]))
+            #print(ext[index][module_code])
             new_vals = re.search(r"PRE-REQUISITE.MODULES</th>.(<td>)*(([A-Z][A-Z][A-Z][0-9|A-Z][0-9][0-9][0-9])(,.)*)+</td>+", r.text)
-            if(new_vals is not None):
+            if new_vals is not None:
                 new_vals = re.findall(r"[A-Z][A-Z][A-Z][0-9|A-Z][0-9][0-9][0-9]", str(new_vals))
                 deps[index].append(new_vals)
                 #print(new_vals)
