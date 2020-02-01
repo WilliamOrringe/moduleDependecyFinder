@@ -13,10 +13,11 @@ def main():
             new_array.append(x.group())
         else:
             x = re.search(r'''(<tr class=""><td class="first">)((<a href="../../modules/2019/.......">.......</a>)|[.]*)[A-Z|a-z| ]*(</td><td>)([|A-Z|a-z| ]*[|:]*[|-]*[0-9]*)*''', new_contents)
-            new_array.append(x.group())
-            new_contents = re.sub(r'''(<tr class=""><td class="first">)((<a href="../../modules/2019/.......">.......</a>)|[.]*)[A-Z|a-z| ]*(</td><td>)([|A-Z|a-z| ]*[|:]*[|-]*[0-9]*)*''', "",new_contents,1)
             if x is None:
                 break
+            new_array.append(x.group())
+            new_contents = re.sub(r'''(<tr class=""><td class="first">)((<a href="../../modules/2019/.......">.......</a>)|[.]*)[A-Z|a-z| ]*(</td><td>)([|A-Z|a-z| ]*[|:]*[|-]*[0-9]*)*''', "",new_contents,1)
+            
     cleanup(new_array)
 def cleanup(new_array):
     ext = []
